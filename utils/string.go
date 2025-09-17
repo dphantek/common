@@ -19,13 +19,13 @@ const (
 	alphabets = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 )
 
-func GenerateRandomString(length int, seeds ...string) (string, error) {
+func NewStringPtr(str string) *string {
+	return &str
+}
+
+func GenerateOTP(length int) (string, error) {
 	id := make([]byte, length)
-	seed := alphabets
-	if len(seeds) > 0 {
-		seed = seeds[0]
-	}
-	// Generate prefix
+	seed := "0123456789"
 	for i := range length {
 		char, err := rand.Int(rand.Reader, big.NewInt(int64(len(seed))))
 		if err != nil {
@@ -33,7 +33,22 @@ func GenerateRandomString(length int, seeds ...string) (string, error) {
 		}
 		id[i] = seed[char.Int64()]
 	}
+	return string(id), nil
+}
 
+func GenerateRandomString(length int, seeds ...string) (string, error) {
+	id := make([]byte, length)
+	seed := alphabets
+	if len(seeds) > 0 {
+		seed = seeds[0]
+	}
+	for i := range length {
+		char, err := rand.Int(rand.Reader, big.NewInt(int64(len(seed))))
+		if err != nil {
+			return "", err
+		}
+		id[i] = seed[char.Int64()]
+	}
 	return string(id), nil
 }
 

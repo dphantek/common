@@ -7,7 +7,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dphantek/common/system"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -17,7 +16,7 @@ func TestMain(m *testing.M) {
 	// Initialize logger with a simple logger.
 	// Adjust the configuration as needed.
 	os.Setenv("SYS_LOG_LEVEL", "INFO")
-	system.InitLogger("test_logger")
+	os.Setenv("SYS_LOG_FILE_PREFIX", "test")
 
 	// Run the tests.
 	code := m.Run()

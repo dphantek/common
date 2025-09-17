@@ -15,9 +15,9 @@ import (
 
 // KeyEntry represents an encryption key with associated metadata.
 type KeyEntry struct {
-	ID     uint `gorm:"primaryKey"` // For GORM
-	Key    []byte
-	Info   []byte
+	ID     uint   `gorm:"primaryKey"` // For GORM
+	Key    []byte `gorm:"type:VARBINARY(32)"`
+	Info   []byte `gorm:"type:VARBINARY(32)"`
 	Expiry time.Time
 }
 
@@ -31,6 +31,11 @@ type KeyStore interface {
 type InMemoryKeyStore struct {
 	mu   sync.RWMutex
 	keys []KeyEntry
+}
+
+// TableName overrides the table name
+func (KeyEntry) TableName() string {
+	return "com_jwt_keys"
 }
 
 // NewInMemoryKeyStore initializes a new in-memory key store.

@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func SuccessResp(c *fiber.Ctx, data interface{}, meta ...ApiResponseMeta) error {
+func SuccessResp(ctx *fiber.Ctx, data any, meta ...ApiResponseMeta) error {
 	resp := ApiResponse{
 		Success: true,
 		Data:    data,
@@ -12,10 +12,10 @@ func SuccessResp(c *fiber.Ctx, data interface{}, meta ...ApiResponseMeta) error 
 	if len(meta) > 0 {
 		resp.Meta = &meta[0]
 	}
-	return c.Status(fiber.StatusOK).JSON(&resp)
+	return ctx.Status(fiber.StatusOK).JSON(&resp)
 }
 
-func ErrorResp(c *fiber.Ctx, err ApiError, meta ...ApiResponseMeta) error {
+func ErrorResp(ctx *fiber.Ctx, err ApiError, meta ...ApiResponseMeta) error {
 	resp := ApiResponse{
 		Success: false,
 		Error:   &err,
@@ -27,32 +27,32 @@ func ErrorResp(c *fiber.Ctx, err ApiError, meta ...ApiResponseMeta) error {
 	if err.Code != 0 {
 		code = err.Code
 	}
-	return c.Status(code).JSON(&resp)
+	return ctx.Status(code).JSON(&resp)
 }
 
-func ErrorCodeResp(c *fiber.Ctx, code int, message ...string) error {
+func ErrorCodeResp(ctx *fiber.Ctx, code int, message ...string) error {
 	msg := "API Error"
 	if len(message) > 0 {
 		msg = message[0]
 	}
-	return ErrorResp(c, ApiError{
+	return ErrorResp(ctx, ApiError{
 		Code:    code,
 		Message: msg,
 	})
 }
 
-func ErrorNotFoundResp(c *fiber.Ctx, message ...string) error {
-	return ErrorCodeResp(c, fiber.StatusNotFound, message...)
+func ErrorNotFoundResp(ctx *fiber.Ctx, message ...string) error {
+	return ErrorCodeResp(ctx, fiber.StatusNotFound, message...)
 }
 
-func ErrorUnauthorizedResp(c *fiber.Ctx, message ...string) error {
-	return ErrorCodeResp(c, fiber.StatusUnauthorized, message...)
+func ErrorUnauthorizedResp(ctx *fiber.Ctx, message ...string) error {
+	return ErrorCodeResp(ctx, fiber.StatusUnauthorized, message...)
 }
 
-func ErrorBadRequestResp(c *fiber.Ctx, message ...string) error {
-	return ErrorCodeResp(c, fiber.StatusBadRequest, message...)
+func ErrorBadRequestResp(ctx *fiber.Ctx, message ...string) error {
+	return ErrorCodeResp(ctx, fiber.StatusBadRequest, message...)
 }
 
-func ErrorInternalServerErrorResp(c *fiber.Ctx, message ...string) error {
-	return ErrorCodeResp(c, fiber.StatusInternalServerError, message...)
+func ErrorInternalServerErrorResp(ctx *fiber.Ctx, message ...string) error {
+	return ErrorCodeResp(ctx, fiber.StatusInternalServerError, message...)
 }

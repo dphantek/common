@@ -12,12 +12,6 @@ import (
 
 var RedisClient *redis.Client
 
-// InitRedisClient initializes a Redis client using env. connection string `REDIS_CONN`
-func InitRedisClient(connStr ...string) (err error) {
-	RedisClient, err = NewRedisClient(system.Env("REDIS_CONN", "localhost"))
-	return
-}
-
 // InitRedisClient initializes a Redis client using optional "host:port@db@password" format.
 // - `port`, `db`, and `password` are optional.
 // - Defaults: port=6379, db=1, password=""

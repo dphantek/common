@@ -1,31 +1,28 @@
 package system
 
 import (
-	"fmt"
 	"os"
 	"strconv"
-
-	"github.com/joho/godotenv"
 )
 
-var loadEnv = false
+// var loadEnv = false
 
 // Config function to get value from env file
 // perhaps not the best implementation
 func Env(key string, defaultValue ...string) string {
-	// load .env file
-	if !loadEnv {
-		if _, err := os.Stat(".env"); err != nil {
-			// NOTE: please do not use Logger here
-			// it was not initialized
-			fmt.Printf("Config .env file does not exist! %s", err.Error())
-		} else {
-			if err := godotenv.Load(".env"); err != nil {
-				fmt.Printf("Error loading .env file! %s", err.Error())
-			}
-		}
-		loadEnv = true
-	}
+	// // load .env file
+	// if !loadEnv {
+	// 	if _, err := os.Stat(".env"); err != nil {
+	// 		// NOTE: please do not use Logger here
+	// 		// it was not initialized
+	// 		fmt.Printf("Config .env file does not exist! %s", err.Error())
+	// 	} else {
+	// 		if err := godotenv.Load(".env"); err != nil {
+	// 			fmt.Printf("Error loading .env file! %s", err.Error())
+	// 		}
+	// 	}
+	// 	loadEnv = true
+	// }
 
 	val := os.Getenv(key)
 	if val == "" && len(defaultValue) > 0 {

@@ -19,7 +19,7 @@ var (
 	DefaultSender string
 )
 
-func Init() {
+func init() {
 	Supporter = system.Env("MAILER_SUPPORTER", "Tuan Phan <peter.phan07@gmail.com>")
 	DefaultSender = system.Env("MAILER_SENDER", "No-Reply <no.reply@gmail.com>")
 	port, _ := strconv.Atoi(system.Env("SMTP_PORT"))

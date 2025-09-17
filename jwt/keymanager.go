@@ -152,7 +152,7 @@ func (km *KeyManager) rotateKey() error {
 		return fmt.Errorf("failed to generate new key: %v", err)
 	}
 
-	newInfo := []byte(fmt.Sprintf("encryption-key-%d", time.Now().Unix()))
+	newInfo := fmt.Appendf(nil, "encryption-key-%d", time.Now().Unix())
 	newExpiry := time.Now().Add(km.rotationPeriod)
 
 	if km.currentKey.Key != nil {
@@ -204,10 +204,8 @@ func (km *KeyManager) GetCurrentKeys() ([]KeyEntry, error) {
 	currentKeys = append(currentKeys, km.currentKey)
 
 	// Determine how many historical keys to include
-	historyCount := 2 // since we already have the current key
-	if len(km.keyHistory) < historyCount {
-		historyCount = len(km.keyHistory)
-	}
+	// since we already have the current key
+	historyCount := min(len(km.keyHistory), 2)
 
 	// Append the required number of historical keys
 	if historyCount > 0 {
