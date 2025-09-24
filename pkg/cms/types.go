@@ -100,7 +100,7 @@ type CmsSetting struct {
 
 // TableName overrides the table name
 func (CmsSetting) TableName() string {
-	return "sys_settings"
+	return "com_settings"
 }
 
 func (Category) TableName() string {
